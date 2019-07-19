@@ -1,12 +1,13 @@
 
 //2.1.1 Remove Duplicates from sorted array
 
+/* 
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
 //solution1-O(n) O(1) time/space
-/*
+
 int removeDuplicates(std::vector<int>& nums)
 {
     if(nums.empty()) return 0;
@@ -118,7 +119,7 @@ class Solution
 
 
 
-
+/* 
 //2.1.4 Search in roated sorted array II
 //following the last question, what if duplicates are allowed?
 
@@ -136,7 +137,84 @@ class solution
         while(first != last)
         {
             const int mid = first + (last - first)/2;
-            if()
+            if(nums[first] < nums[mid])
+            {
+                if(nums[first] <= target && target < nums[last-1])
+                last = mid;
+                else 
+                first = mid+1;
+            }
+            else if(nums[first] > nums[mid])
+            {
+                if(nums[mid] < target && target <= nums[last-1])
+                first = mid+1;
+                else
+                last = mid;
+            }
+            else 
+            {
+                first++;
+            }
         }
+        return false;
     }
 };
+
+*/
+
+
+
+
+
+
+//-------------------------------------
+//Advertisement--another good resource to refer to 
+//https://www.cnblogs.com/grandyang/p/4606334.html
+
+
+//2.1.5 Median of two sorted arrays
+//https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/
+
+/**/
+#include <stdio.h>https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/4-xun-zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/zhao-liang-ge-you-xu-shu-zu-de-zhong-wei-shu/
+#include <vector>
+#include <iostream>
+
+#define max(a,b) (((a)>(b)) ? (a) : (b))
+#define min(a,b) (((a)<(b)) ? (a) : (b))
+#define INT_MAX 2147483647
+#define INT_MIN (-INT_MAX - 1)
+
+class Solution
+{
+    public:
+        double findMedianSortedArrays(std::vector<int>& nums1, std::vector<int>& nums2)
+        {
+            int n = nums1.size();
+            int m = nums2.size();
+            if(n>m)
+            {
+                return findMedianSortedArrays(nums2, nums1);
+            }
+
+            int LMax1, LMax2, RMin1, RMin2, c1, c2, lo = 0, hi = 2*n;
+            while(lo<=hi)
+            {
+                c1 = (lo+hi)/2;
+                c2 = m+n-c1;
+                LMax1 = (c1 == 0) ? INT_MIN : nums1[(c1-1)/2];
+                RMin1 = (c1 == 2*n) ? INT_MAX : nums1[c1/2];
+                LMax2 = (c2 == 0) ? INT_MIN : nums2[(c2-1)/2];
+                RMin2 = (c2 == 2*m) ? INT_MAX : nums2[(c2/2)];
+
+                if(LMax1 > RMin2)
+                    hi = c1-1;
+                else if(LMax2 > RMin1)
+                    lo = c1+1;
+                else
+                    break; 
+            }
+            return (max(LMax1, LMax2)+min(RMin1, RMin2))/2.0;
+        }
+};
+
