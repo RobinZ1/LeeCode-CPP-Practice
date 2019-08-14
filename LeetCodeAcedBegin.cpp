@@ -890,3 +890,48 @@ class Solution
             return resNode;
         }
 };
+
+
+
+
+22. parentheses 
+//给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。
+class Solution
+{
+    public:
+    void helper(int left, int right, string tmp, vector<string>& result)
+    {
+        if(left == 0 && right == 0)
+        {
+            result.push_back(tmp);
+            return;
+        }
+        if(left>right || left<0 || right<0)
+            return;
+        helper(left-1, right, tmp+'(', result);
+        helper(left, right-1, tmp+')', result);
+    }
+
+    vector<string> generateParenthesis(int n)
+    {
+        vector<string>result;
+        helper(n,n,"",result);
+        return result;
+    }
+};
+
+
+
+
+
+
+23.merge-k-sorted-lists
+输入:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+输出: 1->1->2->3->4->4->5->6
+
+
