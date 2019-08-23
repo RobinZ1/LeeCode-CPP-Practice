@@ -1062,3 +1062,176 @@ class Solution
 
 
 
+//
+26 remove duplicates from sorted arrays
+你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+
+示例 1:
+
+给定数组 nums = [1,1,2], 
+
+函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。 
+
+你不需要考虑数组中超出新长度后面的元素。
+
+
+class Solution
+{
+    public:
+    int removeDuplicateds(vector<int>& nums)
+    {
+        if(nums.size()==0) return 0;
+        int i = 0;
+        for(int j = 1; j<nums.size();j++)
+        {
+            if(nums[j]!=nums[i])
+            {
+                i++;
+                nums[i]=nums[j];
+            }
+        }
+        return i+1;
+    }
+};
+
+
+//
+27 remove element
+给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。
+
+不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+
+元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
+
+示例 1:
+
+给定 nums = [3,2,2,3], val = 3,
+
+函数应该返回新的长度 2, 并且 nums 中的前两个元素均为 2。
+
+你不需要考虑数组中超出新长度后面的元素。
+
+class Solution
+{
+    public:
+        int removeElement(vector<int>& nums, int val)
+        {
+            int i = 0;
+            for(int j = 0; j<nums.size();j++)
+            {
+                if(nums[j]!=val)
+                {
+                    nums[i]=nums[j];
+                    i++;
+                }
+            }
+            return i;
+        }
+};
+
+
+//
+28. implement strStr()
+
+实现 strStr() 函数。
+
+给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
+
+示例 1:
+
+输入: haystack = "hello", needle = "ll"
+输出: 2
+示例 2:
+
+输入: haystack = "aaaaa", needle = "bba"
+输出: -1
+
+class Solution
+{
+    public:
+    int strStr(string haystack, string needle)
+    {
+        if(needle.empty())
+        return 0;
+        int pos = haystack.find(needle);
+        return pos;
+    }
+};
+
+
+//
+29. divide two integers
+
+给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
+
+返回被除数 dividend 除以除数 divisor 得到的商。
+
+示例 1:
+
+输入: dividend = 10, divisor = 3
+输出: 3
+示例 2:
+
+输入: dividend = 7, divisor = -3
+输出: -2
+
+class Solution
+{
+    public:
+    int divide(int dividend, int divisor)
+    {
+        int flag = 1;
+        if((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0))
+            flag = -1;
+        int res = 0;
+        if(dividend > 0) dividend = 0-dividend;
+        if(divisor > 0) divisor = 0-divisor;
+        while(dividend <= divisor)
+        {
+            int temp = divisor, i = -1;
+            while(dividend <= temp)
+            {
+                dividend -= temp;
+                res += i;
+                if(INT_MIN-temp <= temp)
+                {
+                    temp += temp;
+                    i += i;
+                }
+                else
+                    break;
+            }
+        }
+        if(flag == -1) return res;
+        if(flag == 1 && res>INT_MIN) return 0-res;
+        return INT_MAX;
+    }
+};
+
+
+
+
+//
+30
+给定一个字符串 s 和一些长度相同的单词 words。找出 s 中恰好可以由 words 中所有单词串联形成的子串的起始位置。
+
+注意子串要与 words 中的单词完全匹配，中间不能有其他字符，但不需要考虑 words 中单词串联的顺序。
+
+ 
+
+示例 1：
+
+输入：
+  s = "barfoothefoobarman",
+  words = ["foo","bar"]
+输出：[0,9]
+解释：
+从索引 0 和 9 开始的子串分别是 "barfoor" 和 "foobar" 。
+输出的顺序不重要, [9,0] 也是有效答案。
+
+示例 2：
+
+输入：
+  s = "wordgoodgoodgoodbestword",
+  words = ["word","good","best","word"]
+输出：[]
